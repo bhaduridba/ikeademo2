@@ -12,6 +12,7 @@ from json import dumps
 def setup_streaming():
     import subprocess
     subprocess.call(['./01-setup.sh'])
+    #subprocess.call(['./Users/sobhan/Documents/projects/ikeademo2/01-setup.sh'])
 
 def main():
 

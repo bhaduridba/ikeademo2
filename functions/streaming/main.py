@@ -23,14 +23,10 @@ import pytz
 
 
 PROJECT_ID = os.getenv('GCP_PROJECT')
-#BQ_DATASET = 'mydataset'
 BQ_DATASET = 'ikeademo2'
-#BQ_TABLE = 'mytable'
 BQ_TABLE = 'demo2'
-#ERROR_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'streaming_error_topic')
-ERROR_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'clevron_streaming_error_topic')
-#SUCCESS_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'streaming_success_topic')
-SUCCESS_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'clevron_streaming_success_topic')
+ERROR_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'cleveron_streaming_error_topic')
+SUCCESS_TOPIC = 'projects/%s/topics/%s' % (PROJECT_ID, 'cleveron_streaming_success_topic')
 DB = firestore.Client()
 CS = storage.Client()
 PS = pubsub_v1.PublisherClient()
@@ -65,7 +61,7 @@ def _handle_duplication(db_ref):
     db_ref.update({
         'duplication_attempts': dups
     })
-    logging.warn('Duplication attempt Clevron streaming file \'%s\'' % db_ref.id)
+    logging.warn('Duplication attempt Cleveron streaming file \'%s\'' % db_ref.id)
 
 
 def _insert_into_bigquery(bucket_name, file_name):
@@ -92,7 +88,7 @@ def _handle_success(db_ref):
 
 
 def _handle_error(db_ref):
-    message = 'Error Clevron streaming file \'%s\'. Cause: %s' % (db_ref.id, traceback.format_exc())
+    message = 'Error Cleveron streaming file \'%s\'. Cause: %s' % (db_ref.id, traceback.format_exc())
     doc = {
         u'success': False,
         u'error_message': message,
