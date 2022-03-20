@@ -1,75 +1,96 @@
 #!/usr/bin/env bash
-#export KAFKA=/home/ec2-user/kafka/kafka_2.12
-#export PATH=$PATH:$KAFKA/bin:/usr/local/bin
+## use pip to install required libraries
+## ************************************************* ##
+## enable Cloud Build API before running the process ##
+## ************************************************* ##
 
+gcloud components update
 # Setup environment
-gcloud config set project ikeademo2
 
 export REGION=us-central1
+echo $REGION
+# git clone https://github.com/bhaduridba/ikeademo2.git .
+# cd ikeademo2
 
-git clone https://github.com/bhaduridba/ikeademo2.git .
-cd ikeademo2
-
-# Create streaming source and destination sinks
+## Create streaming source and destination sinks
 ## Create the Cloud Storage bucket
-export FILES_SOURCE=${DEVSHELL_PROJECT_ID}-files-source-$(date +%s)
+export PROJECT_ID='ikeademo2'
+echo $PROJECT_ID
+
+gcloud config set project $PROJECT_ID
+
+export SOURCE='cleveron'
+export FILES_SOURCE=${PROJECT_ID}-${SOURCE}-files-source-$(date +%s)
+echo $FILES_SOURCE
+
+## ------------- test -------------
 gsutil mb -c regional -l ${REGION} gs://${FILES_SOURCE}
 
 ## Create the BigQuery table demo2 in dataset ikeademo2
-bq mk ikeademo2
-bq mk ikeademo2.demo2 schema.json
+export TABLE_NAME='demo2'
 
-# Set up the streaming Cloud Function
+bq mk $PROJECT_ID
+bq mk ${PROJECT_ID}.${TABLE_NAME} schema.json
+
+## Set up the streaming Cloud Function
 ## To deploy the function:
 
 ## Create a Cloud Storage bucket to stage your functions during deployment
 ## where CLEVRON_FUNCTIONS_BUCKET is set up as an environment variable with a unique name.
 
-export CLEVRON_FUNCTIONS_BUCKET=${DEVSHELL_PROJECT_ID}-clevron-functions-$(date +%s)
-
-gsutil mb -c regional -l ${REGION} gs://${CLEVRON_FUNCTIONS_BUCKET}
+export CLEVERON_FUNCTIONS_BUCKET=${PROJECT_ID}-${SOURCE}-functions-$(date +%s)
+echo $CLEVERON_FUNCTIONS_BUCKET
+gsutil mb -c regional -l ${REGION} gs://${CLEVERON_FUNCTIONS_BUCKET}
 
 ## Deploy streaming Cloud function
 gcloud functions deploy streaming --region=${REGION} \
     --source=./functions/streaming --runtime=python37 \
-    --stage-bucket=${CLEVRON_FUNCTIONS_BUCKET} \
+    --stage-bucket=${CLEVERON_FUNCTIONS_BUCKET} \
     --trigger-bucket=${FILES_SOURCE}
 
 ## Create a Pub/Sub topic, called streaming_error_topic, to handle the error files
 
-export STREAMING_ERROR_TOPIC=clevron_streaming_error_topic
+export STREAMING_ERROR_TOPIC=${PROJECT_ID}-${SOURCE}-streaming_error_topic
+echo $STREAMING_ERROR_TOPIC
+
 gcloud pubsub topics create ${STREAMING_ERROR_TOPIC}
 
 ## Create a Pub/Sub topic, called streaming_success_topic, to handle the valid files
-export STREAMING_SUCCESS_TOPIC=clevron_streaming_success_topic
+export STREAMING_SUCCESS_TOPIC=${PROJECT_ID}-${SOURCE}-streaming_success_topic
+echo $STREAMING_SUCCESS_TOPIC
 
-# Setup your Firestore database
-#Set up your Firestore database
+gcloud pubsub topics create ${STREAMING_SUCCESS_TOPIC}
+
+# Setup Firestore database
 ## *************************************** ##
 ## We can use a Terraform script to provision Firestore separate from this flow ##
 ## *************************************** ##
 
 # Handle streaming error files
-export FILES_ERROR=${DEVSHELL_PROJECT_ID}-clevron-files-error-$(date +%s)
+
+export FILES_ERROR=${PROJECT_ID}-${SOURCE}-files-error-$(date +%s)
+echo $FILES_ERROR
 gsutil mb -c regional -l ${REGION} gs://${FILES_ERROR}
 
 ## Deploy streaming_error function to handle error files
 gcloud functions deploy clevron_streaming_error --region=${REGION} \
     --source=./functions/move_file \
     --entry-point=move_file --runtime=python37 \
-    --stage-bucket=${CLEVRON_FUNCTIONS_BUCKET} \
+    --stage-bucket=${CLEVERON_FUNCTIONS_BUCKET} \
     --trigger-topic=${STREAMING_ERROR_TOPIC} \
     --set-env-vars SOURCE_BUCKET=${FILES_SOURCE},DESTINATION_BUCKET=${FILES_ERROR}
 
-# Handle successful streaming
+## Handle successful streaming
 ## Create  Coldline Cloud Storage bucket. FILES_SUCCESS
-export FILES_SUCCESS=${DEVSHELL_PROJECT_ID}-clevron-files-success-$(date +%s)
+
+export FILES_SUCCESS=${PROJECT_ID}-${SOURCE}-files-success-$(date +%s)
+echo $FILES_SUCCESS
 gsutil mb -c coldline -l ${REGION} gs://${FILES_SUCCESS}
 
 ## Deploy streaming_success function to handle valid events
-gcloud functions deploy clevron_streaming_success --region=${REGION} \
+gcloud functions deploy cleveron_streaming_success --region=${REGION} \
     --source=./functions/move_file \
     --entry-point=move_file --runtime=python37 \
-    --stage-bucket=${CLEVRON_FUNCTIONS_BUCKET} \
+    --stage-bucket=${CLEVERON_FUNCTIONS_BUCKET} \
     --trigger-topic=${STREAMING_SUCCESS_TOPIC} \
     --set-env-vars SOURCE_BUCKET=${FILES_SOURCE},DESTINATION_BUCKET=${FILES_SUCCESS}
