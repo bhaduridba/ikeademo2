@@ -1,59 +1,87 @@
 [
     {
-        "name": "id",
+        "name": "address",
         "type": "STRING",
         "mode": "NULLABLE"
     },
     {
-        "name": "first_name",
+        "name": "altPinCode",
         "type": "STRING",
         "mode": "NULLABLE"
     },
     {
-        "name": "last_name",
+        "name": "barcode",
         "type": "STRING",
         "mode": "NULLABLE"
     },
     {
-        "name": "dob",
-        "type": "DATE",
+        "name": "city",
+        "type": "STRING",
         "mode": "NULLABLE"
     },
     {
-        "name": "addresses",
-        "type": "RECORD",
-        "mode": "REPEATED",
-        "fields": [
-            {
-                "name": "status",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "address",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "city",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "state",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "zip",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            },
-            {
-                "name": "numberOfYears",
-                "type": "STRING",
-                "mode": "NULLABLE"
-            }
-        ]
-    }
+        "name": "country",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "countryCode",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "event",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "lockerCount",
+        "type": "integer",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "orderId",
+        "type": "integer",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "pinCode",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "postcode",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "slotId",
+        "type": "integer",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "slotSize",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "stationDisplayName",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "stationName",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "stationType",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    },
+    {
+        "name": "timestamp",
+        "type": "STRING",
+        "mode": "NULLABLE"
+    }        
 ]

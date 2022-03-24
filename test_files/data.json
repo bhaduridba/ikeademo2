@@ -1,1 +1,77 @@
-{"id":"1","first_name":"John","last_name":"Doe","dob":"1968-01-22","addresses":[{"status":"current","address":"123 First Avenue","city":"Seattle","state":"WA","zip":"11111","numberOfYears":"1"},{"status":"previous","address":"456 Main Street","city":"Portland","state":"OR","zip":"22222","numberOfYears":"5"}]}
+{
+    "address":"8000 11 St. S.E.",
+    "altPinCode":"<empty>",
+    "barcode":"20299485",
+    "city":"Calgary",
+    "country":"Canada",
+    "countryCode":"CA",
+    "event":"READY_FOR_PICKUP",
+    "lockerCount":1,
+    "orderId":20299485,
+    "pinCode":"******",
+    "postcode":"T2H3B2",
+    "slotId":58,
+    "slotSize":"XXL-FD",
+    "stationDisplayName":"IKEA Calgary lockers in the parking area near Click & collect, Side A",
+    "stationName":"STO.216",
+    "stationType":"LOCKER",
+    "timestamp":"2022-02-28T10:51:52-05:00"
+ }
+ {
+    "address":"8100 11 St. S.E.",
+    "altPinCode":"<empty>",
+    "barcode":"30299485",
+    "city":"Calgary",
+    "country":"Canada",
+    "countryCode":"CA",
+    "event":"READY_FOR_PICKUP",
+    "lockerCount":1,
+    "orderId":21299485,
+    "pinCode":"******",
+    "postcode":"T2H3B2",
+    "slotId":59,
+    "slotSize":"XXL-FD",
+    "stationDisplayName":"IKEA Calgary lockers in the parking area near Click & collect, Side A",
+    "stationName":"STO.217",
+    "stationType":"LOCKER",
+    "timestamp":"2022-01-28T10:51:52-05:00"
+ }
+ {
+    "address":"8100 11 St. S.E.",
+    "altPinCode":"<empty>",
+    "barcode":"30299485",
+    "city":"Calgary",
+    "country":"Canada",
+    "countryCode":"CA",
+    "event":"READY_FOR_PICKUP",
+    "lockerCount":1,
+    "orderId":21299485,
+    "pinCode":"******",
+    "postcode":"T2H3B2",
+    "slotId":59,
+    "slotSize":"XXL-FD",
+    "stationDisplayName":"IKEA Calgary lockers in the parking area near Click & collect, Side A",
+    "stationName":"STO.217",
+    "stationType":"LOCKER",
+    "timestamp":"2022-01-28T10:51:52-05:00"
+ }
+ {
+    "address":"8101 11 St. S.E.",
+    "altPinCode":"<empty>",
+    "barcode":"31299485",
+    "city":"Toronto",
+    "country":"Canada",
+    "countryCode":"CA",
+    "event":"READY_FOR_PICKUP",
+    "lockerCount":1,
+    "orderId":22299485,
+    "pinCode":"******",
+    "postcode":"T2H3B2",
+    "slotId":60,
+    "slotSize":"XXL-FD",
+    "stationDisplayName":"IKEA Toronto lockers in the parking area near Click & collect, Side A",
+    "stationName":"STO.218",
+    "stationType":"LOCKER",
+    "timestamp":"2022-01-02T10:00:52-05:00"
+ }
+ 
